@@ -16,8 +16,8 @@ import {
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle, Mail, Lock, User, Briefcase, Users } from "lucide-react";
-
-type Role = "manager" | "employee";
+import { useAuth } from "@/hooks/useAuth";
+import { Role } from "@/types/user.types";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -27,7 +27,7 @@ export default function SignupPage() {
     password: "",
     confirmPassword: "",
   });
-  const [role, setRole] = useState<Role>("employee");
+  const [role, setRole] = useState<Role>("EMPLOYEE");
   const [errors, setErrors] = useState<{
     fullName?: string;
     email?: string;
@@ -36,6 +36,8 @@ export default function SignupPage() {
     submit?: string;
   }>({});
   const [isLoading, setIsLoading] = useState(false);
+
+  const { handleSignup } = useAuth();
 
   const validateForm = () => {
     const newErrors: typeof errors = {};
@@ -54,8 +56,8 @@ export default function SignupPage() {
 
     if (!formData.password) {
       newErrors.password = "Password is required";
-    } else if (formData.password.length < 8) {
-      newErrors.password = "Password must be at least 8 characters";
+    } else if (formData.password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters";
     } else if (!/[A-Z]/.test(formData.password)) {
       newErrors.password =
         "Password must contain at least one uppercase letter";
@@ -92,21 +94,20 @@ export default function SignupPage() {
     setErrors({});
 
     try {
-      // Mock signup handler - simulates API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      // Mock signup success
-      console.log("[v0] Signup successful:", {
+      const res = await handleSignup({
         name: formData.fullName,
         email: formData.email,
-        role: role,
+        password: formData.password,
+        role,
       });
 
-      // Redirect to dashboard
-      router.push("/");
+      console.log("Signup successful:");
+
+      router.push("/auth/login");
     } catch (error) {
+      console.error("Login error:", error);
       setErrors({
-        submit: "Failed to create account. Please try again.",
+        submit: error?.response?.data?.message || "Failed to create account",
       });
     } finally {
       setIsLoading(false);
@@ -156,7 +157,7 @@ export default function SignupPage() {
                     id="fullName"
                     name="fullName"
                     type="text"
-                    placeholder="John Doe"
+                    placeholder="Your name"
                     value={formData.fullName}
                     onChange={handleChange}
                     className={`pl-10 ${errors.fullName ? "border-destructive focus-visible:ring-destructive/50" : ""}`}
@@ -257,8 +258,8 @@ export default function SignupPage() {
                 >
                   {/* Manager Option */}
                   <div className="flex items-center space-x-3 rounded-lg border border-border/50 p-3 cursor-pointer hover:bg-muted/30 transition-colors">
-                    <RadioGroupItem value="manager" id="manager" />
-                    <label htmlFor="manager" className="flex-1 cursor-pointer">
+                    <RadioGroupItem value="MANAGER" id="MANAGER" />
+                    <label htmlFor="MANAGER" className="flex-1 cursor-pointer">
                       <div className="flex items-center gap-2">
                         <Briefcase className="h-4 w-4 text-primary" />
                         <div>
@@ -275,8 +276,8 @@ export default function SignupPage() {
 
                   {/* Employee Option */}
                   <div className="flex items-center space-x-3 rounded-lg border border-border/50 p-3 cursor-pointer hover:bg-muted/30 transition-colors">
-                    <RadioGroupItem value="employee" id="employee" />
-                    <label htmlFor="employee" className="flex-1 cursor-pointer">
+                    <RadioGroupItem value="EMPLOYEE" id="EMPLOYEE" />
+                    <label htmlFor="EMPLOYEE" className="flex-1 cursor-pointer">
                       <div className="flex items-center gap-2">
                         <Users className="h-4 w-4 text-primary" />
                         <div>

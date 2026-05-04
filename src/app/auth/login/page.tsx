@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle, Mail, Lock } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -26,6 +27,8 @@ export default function LoginPage() {
     submit?: string;
   }>({});
   const [isLoading, setIsLoading] = useState(false);
+
+  const { handleLogin } = useAuth();
 
   const validateForm = () => {
     const newErrors: typeof errors = {};
@@ -57,17 +60,18 @@ export default function LoginPage() {
     setErrors({});
 
     try {
-      // Mock login handler - simulates API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const res = await handleLogin({
+        email,
+        password,
+      });
 
-      // Mock authentication success
-      console.log("[v0] Login successful for:", email);
+      console.log("Login successful for:", email);
 
-      // Redirect to dashboard
       router.push("/");
     } catch (error) {
+      console.error("Login error:", error);
       setErrors({
-        submit: "Failed to login. Please try again.",
+        submit: error?.response?.data?.message || "Invalid email or password",
       });
     } finally {
       setIsLoading(false);
@@ -191,26 +195,18 @@ export default function LoginPage() {
                 <span className="bg-card px-2 text-muted-foreground">Or</span>
               </div>
             </div>
-
-            {/* Demo Credentials */}
-            <div className="bg-muted/30 rounded-md p-3 text-xs text-muted-foreground space-y-1">
-              <p className="font-semibold text-foreground">Demo credentials:</p>
-              <p>Email: demo@example.com</p>
-              <p>Password: password123</p>
+            {/* Sign Up Link */}
+            <div className="text-center text-sm text-muted-foreground">
+              Don&apos;t have an account?{" "}
+              <Link
+                href="/auth/signup"
+                className="font-semibold text-primary hover:text-primary/80 transition-colors"
+              >
+                Sign up
+              </Link>
             </div>
           </CardContent>
         </Card>
-
-        {/* Sign Up Link */}
-        <div className="text-center text-sm text-muted-foreground">
-          Don&apos;t have an account?{" "}
-          <Link
-            href="/auth/signup"
-            className="font-semibold text-primary hover:text-primary/80 transition-colors"
-          >
-            Sign up
-          </Link>
-        </div>
       </div>
     </div>
   );

@@ -15,8 +15,10 @@ export const useAuth = () => {
     try {
       const res = await login(data);
       const result = res.data as AuthResponse;
+      console.log("result:", result);
 
-      localStorage.setItem("token", result.access_token);
+      // Set cookie
+      document.cookie = `token=${result.access_token}; path=/; max-age=86400; samesite=lax`;
 
       return result;
     } finally {
