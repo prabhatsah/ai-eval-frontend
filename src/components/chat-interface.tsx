@@ -1,52 +1,58 @@
-'use client'
+"use client";
 
-import * as React from 'react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-import { Send, Mic } from 'lucide-react'
-import { ScrollArea } from '@/components/ui/scroll-area'
+import * as React from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Send, Mic } from "lucide-react";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface Message {
-  id: string
-  type: 'question' | 'answer'
-  content: string
-  timestamp: Date
+  id: string;
+  type: "question" | "answer";
+  content: string;
+  timestamp: Date;
 }
 
 interface ChatInterfaceProps {
-  title: string
-  description?: string
-  messages: Message[]
-  currentInput?: string
-  onSendMessage?: (message: string) => void
-  isLoading?: boolean
+  title: string;
+  description?: string;
+  messages: Message[];
+  currentInput?: string;
+  onSendMessage?: (message: string) => void;
+  isLoading?: boolean;
 }
 
 export function ChatInterface({
   title,
   description,
   messages,
-  currentInput = '',
+  currentInput = "",
   onSendMessage,
   isLoading = false,
 }: ChatInterfaceProps) {
-  const [input, setInput] = React.useState(currentInput)
-  const scrollRef = React.useRef<HTMLDivElement>(null)
+  const [input, setInput] = React.useState(currentInput);
+  const scrollRef = React.useRef<HTMLDivElement>(null);
 
   // Auto-scroll to bottom when new messages arrive
   React.useEffect(() => {
     if (scrollRef.current) {
-      scrollRef.current.scrollIntoView({ behavior: 'smooth' })
+      scrollRef.current.scrollIntoView({ behavior: "smooth" });
     }
-  }, [messages])
+  }, [messages]);
 
   const handleSend = () => {
     if (input.trim()) {
-      onSendMessage?.(input)
-      setInput('')
+      onSendMessage?.(input);
+      setInput("");
     }
-  }
+  };
 
   return (
     <Card className="w-full h-full flex flex-col overflow-hidden">
@@ -71,21 +77,23 @@ export function ChatInterface({
                 <div
                   key={message.id}
                   className={`flex gap-3 animate-in fade-in-50 duration-300 ${
-                    message.type === 'question' ? 'justify-start' : 'justify-end'
+                    message.type === "question"
+                      ? "justify-start"
+                      : "justify-end"
                   }`}
                 >
                   <div
                     className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
-                      message.type === 'question'
-                        ? 'bg-muted text-muted-foreground'
-                        : 'bg-primary text-primary-foreground'
+                      message.type === "question"
+                        ? "bg-muted text-muted-foreground"
+                        : "bg-primary text-primary-foreground"
                     }`}
                   >
                     <p className="text-sm leading-relaxed">{message.content}</p>
                     <span className="text-xs opacity-70 mt-1 block">
                       {message.timestamp.toLocaleTimeString([], {
-                        hour: '2-digit',
-                        minute: '2-digit',
+                        hour: "2-digit",
+                        minute: "2-digit",
                       })}
                     </span>
                   </div>
@@ -103,9 +111,9 @@ export function ChatInterface({
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                  e.preventDefault()
-                  handleSend()
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
+                  handleSend();
                 }
               }}
               placeholder="Type your response..."
@@ -135,5 +143,5 @@ export function ChatInterface({
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }

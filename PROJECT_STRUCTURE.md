@@ -1,6 +1,7 @@
 # SaaS Analytics Platform - Project Structure
 
 ## Overview
+
 A modern SaaS analytics dashboard built with Next.js 16, TypeScript, Tailwind CSS, and shadcn/ui with dark theme enabled by default.
 
 ## Key Features
@@ -11,7 +12,7 @@ A modern SaaS analytics dashboard built with Next.js 16, TypeScript, Tailwind CS
 ✅ **Navigation** - Clean navigation structure with active state indicators  
 ✅ **SaaS-Style Design** - Linear/Stripe-inspired clean and minimal design  
 ✅ **TypeScript** - Full type safety throughout the codebase  
-✅ **Tailwind CSS** - Utility-first styling with custom design tokens  
+✅ **Tailwind CSS** - Utility-first styling with custom design tokens
 
 ## File Structure
 
@@ -48,12 +49,14 @@ styles/
 ### Layout Components
 
 **AppLayout** (`components/app-layout.tsx`)
+
 - Wraps all pages with SidebarProvider
 - Includes sidebar with navigation menu
 - Top navbar with sidebar toggle
 - Main content area with scroll support
 
 **Theme System** (`app/layout.tsx`)
+
 - Dark theme enabled by default with `<html className="dark">`
 - ThemeProvider configured with next-themes
 - Color tokens defined in globals.css (OKLCH color space)
@@ -70,6 +73,7 @@ styles/
 ### Design Tokens
 
 CSS custom properties defined in `globals.css`:
+
 - Colors: primary, secondary, accent, destructive, muted
 - Backgrounds: background, card, popover
 - Foregrounds: foreground, muted-foreground
@@ -103,22 +107,27 @@ Analytics (Logo)
 ## Development
 
 ### Start Dev Server
+
 ```bash
 pnpm dev
 ```
 
 ### Add New Pages
+
 1. Create directory in `app/` (e.g., `app/new-page/`)
 2. Create `page.tsx` inside
 3. Wrap content with `<AppLayout>` component
 4. Add navigation item to sidebar in `components/app-layout.tsx`
 
 ### Customize Theme
+
 Edit the CSS custom properties in `app/globals.css`:
+
 - Modify `--primary`, `--accent`, etc.
 - Update light/dark mode colors in `:root` and `.dark` selectors
 
 ### Add New Components
+
 Use shadcn/ui components or create custom components in `components/`
 
 ## Technology Stack

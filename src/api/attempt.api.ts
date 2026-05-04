@@ -8,7 +8,9 @@ export const startAttempt = async (evaluationId: string): Promise<Attempt> => {
   return res.data;
 };
 
-export const submitAnswer = async (payload: SubmitAnswerRequest): Promise<void> => {
+export const submitAnswer = async (
+  payload: SubmitAnswerRequest,
+): Promise<void> => {
   await apiClient.post("/attempt/answer", payload);
 };
 

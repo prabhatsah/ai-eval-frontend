@@ -1,61 +1,67 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Checkbox } from '@/components/ui/checkbox'
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
-import Link from 'next/link'
-import { ArrowLeft } from 'lucide-react'
+import { useState } from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 
 export default function CreateEvaluationPage() {
   const [formData, setFormData] = useState({
-    title: '',
-    skill: '',
-    mcqCount: '5',
+    title: "",
+    skill: "",
+    mcqCount: "5",
     includeCoding: false,
-    aiInterviewCount: '3',
-    passingCriteria: '60',
-    mcqCutoff: '50',
-    codingCutoff: '50',
-    aiInterviewCutoff: '50',
-  })
+    aiInterviewCount: "3",
+    passingCriteria: "60",
+    mcqCutoff: "50",
+    codingCutoff: "50",
+    aiInterviewCutoff: "50",
+  });
 
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked } = e.target
-    setFormData(prev => ({
+    const { name, value, type, checked } = e.target;
+    setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value,
-    }))
-  }
+      [name]: type === "checkbox" ? checked : value,
+    }));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-    
+    e.preventDefault();
+    setIsSubmitting(true);
+
     // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500))
-    
-    console.log('Evaluation created:', formData)
-    setIsSubmitting(false)
-    
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+
+    console.log("Evaluation created:", formData);
+    setIsSubmitting(false);
+
     // Show success message or redirect
-    alert('Evaluation created successfully!')
-  }
+    alert("Evaluation created successfully!");
+  };
 
   const skills = [
-    'Frontend Development',
-    'Backend Development',
-    'Full Stack',
-    'Python',
-    'Data Science',
-    'DevOps',
-    'Cloud Architecture',
-  ]
+    "Frontend Development",
+    "Backend Development",
+    "Full Stack",
+    "Python",
+    "Data Science",
+    "DevOps",
+    "Cloud Architecture",
+  ];
 
   return (
     <div className="max-w-4xl mx-auto py-8 space-y-6">
@@ -67,8 +73,12 @@ export default function CreateEvaluationPage() {
           </Button>
         </Link>
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Create Evaluation</h1>
-          <p className="text-muted-foreground">Set up a new evaluation for your team members</p>
+          <h1 className="text-3xl font-bold tracking-tight">
+            Create Evaluation
+          </h1>
+          <p className="text-muted-foreground">
+            Set up a new evaluation for your team members
+          </p>
         </div>
       </div>
 
@@ -77,7 +87,9 @@ export default function CreateEvaluationPage() {
         <Card className="border-border/50">
           <CardHeader>
             <CardTitle>Basic Information</CardTitle>
-            <CardDescription>Name and skill for this evaluation</CardDescription>
+            <CardDescription>
+              Name and skill for this evaluation
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
@@ -96,7 +108,7 @@ export default function CreateEvaluationPage() {
             <div className="space-y-2">
               <Label htmlFor="skill">Skill *</Label>
               <div className="space-y-2">
-                {skills.map(skill => (
+                {skills.map((skill) => (
                   <div key={skill} className="flex items-center space-x-2">
                     <input
                       type="radio"
@@ -107,7 +119,10 @@ export default function CreateEvaluationPage() {
                       onChange={handleChange}
                       className="w-4 h-4"
                     />
-                    <Label htmlFor={skill} className="font-normal cursor-pointer">
+                    <Label
+                      htmlFor={skill}
+                      className="font-normal cursor-pointer"
+                    >
                       {skill}
                     </Label>
                   </div>
@@ -121,7 +136,9 @@ export default function CreateEvaluationPage() {
         <Card className="border-border/50">
           <CardHeader>
             <CardTitle>Evaluation Structure</CardTitle>
-            <CardDescription>Configure the types and number of questions</CardDescription>
+            <CardDescription>
+              Configure the types and number of questions
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
@@ -136,7 +153,9 @@ export default function CreateEvaluationPage() {
                 onChange={handleChange}
                 className="border-border/50"
               />
-              <p className="text-xs text-muted-foreground">Recommended: 5-20 questions</p>
+              <p className="text-xs text-muted-foreground">
+                Recommended: 5-20 questions
+              </p>
             </div>
 
             <div className="space-y-3">
@@ -146,22 +165,31 @@ export default function CreateEvaluationPage() {
                   name="includeCoding"
                   checked={formData.includeCoding}
                   onCheckedChange={(checked) =>
-                    setFormData(prev => ({ ...prev, includeCoding: checked as boolean }))
+                    setFormData((prev) => ({
+                      ...prev,
+                      includeCoding: checked as boolean,
+                    }))
                   }
                 />
-                <Label htmlFor="includeCoding" className="font-normal cursor-pointer">
+                <Label
+                  htmlFor="includeCoding"
+                  className="font-normal cursor-pointer"
+                >
                   Include Coding Challenge
                 </Label>
               </div>
               {formData.includeCoding && (
                 <div className="text-sm text-muted-foreground bg-muted/30 p-3 rounded-md">
-                  Candidates will be asked to solve 1 coding problem with test cases
+                  Candidates will be asked to solve 1 coding problem with test
+                  cases
                 </div>
               )}
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="aiInterviewCount">Number of AI Interview Questions *</Label>
+              <Label htmlFor="aiInterviewCount">
+                Number of AI Interview Questions *
+              </Label>
               <Input
                 id="aiInterviewCount"
                 name="aiInterviewCount"
@@ -172,7 +200,9 @@ export default function CreateEvaluationPage() {
                 onChange={handleChange}
                 className="border-border/50"
               />
-              <p className="text-xs text-muted-foreground">Recommended: 3-10 questions</p>
+              <p className="text-xs text-muted-foreground">
+                Recommended: 3-10 questions
+              </p>
             </div>
           </CardContent>
         </Card>
@@ -181,11 +211,15 @@ export default function CreateEvaluationPage() {
         <Card className="border-border/50">
           <CardHeader>
             <CardTitle>Passing Criteria</CardTitle>
-            <CardDescription>Set the score thresholds for this evaluation</CardDescription>
+            <CardDescription>
+              Set the score thresholds for this evaluation
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="space-y-2">
-              <Label htmlFor="passingCriteria">Overall Passing Percentage *</Label>
+              <Label htmlFor="passingCriteria">
+                Overall Passing Percentage *
+              </Label>
               <div className="flex items-center gap-2">
                 <Input
                   id="passingCriteria"
@@ -203,7 +237,7 @@ export default function CreateEvaluationPage() {
 
             <div className="space-y-4 bg-muted/30 p-4 rounded-lg">
               <p className="font-medium text-sm">Section-wise Cutoff Scores</p>
-              
+
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <Label htmlFor="mcqCutoff">MCQ Cutoff</Label>
@@ -284,11 +318,11 @@ export default function CreateEvaluationPage() {
                 Creating...
               </>
             ) : (
-              'Create Evaluation'
+              "Create Evaluation"
             )}
           </Button>
         </div>
       </form>
     </div>
-  )
+  );
 }

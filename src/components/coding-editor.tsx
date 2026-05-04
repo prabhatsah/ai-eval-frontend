@@ -1,26 +1,32 @@
-'use client'
+"use client";
 
-import * as React from 'react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Textarea } from '@/components/ui/textarea'
-import { Code2 } from 'lucide-react'
+import * as React from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Textarea } from "@/components/ui/textarea";
+import { Code2 } from "lucide-react";
 
 interface CodingEditorProps {
-  title: string
-  description?: string
-  placeholder?: string
-  language?: string
-  value?: string
-  onChange?: (value: string) => void
-  readOnly?: boolean
+  title: string;
+  description?: string;
+  placeholder?: string;
+  language?: string;
+  value?: string;
+  onChange?: (value: string) => void;
+  readOnly?: boolean;
 }
 
 export function CodingEditor({
   title,
   description,
-  placeholder = 'Write your code here...',
-  language = 'javascript',
-  value = '',
+  placeholder = "Write your code here...",
+  language = "javascript",
+  value = "",
   onChange,
   readOnly = false,
 }: CodingEditorProps) {
@@ -38,10 +44,10 @@ export function CodingEditor({
       <CardContent className="p-0">
         <div className="bg-muted/50 border-t px-4 py-3">
           <span className="text-xs font-mono text-muted-foreground">
-            {language === 'javascript' && 'JavaScript'}
-            {language === 'python' && 'Python'}
-            {language === 'java' && 'Java'}
-            {language === 'cpp' && 'C++'}
+            {language === "javascript" && "JavaScript"}
+            {language === "python" && "Python"}
+            {language === "java" && "Java"}
+            {language === "cpp" && "C++"}
           </span>
         </div>
         <div className="relative">
@@ -57,5 +63,5 @@ export function CodingEditor({
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }

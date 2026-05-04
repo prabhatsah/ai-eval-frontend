@@ -1,6 +1,11 @@
 import { useState } from "react";
 import { login, signup } from "../api/auth.api";
-import { AuthResponse, LoginRequest, SignupRequest, SignupResponse } from "../types/auth.types";
+import {
+  AuthResponse,
+  LoginRequest,
+  SignupRequest,
+  SignupResponse,
+} from "../types/auth.types";
 
 export const useAuth = () => {
   const [loading, setLoading] = useState<boolean>(false);

@@ -1,54 +1,67 @@
-'use client'
+"use client";
 
-import * as React from 'react'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { CheckCircle2, XCircle, TrendingUp, AlertCircle, BarChart3, ArrowRight } from 'lucide-react'
-import { AppLayout } from '@/components/app-layout'
-import { Progress } from '@/components/ui/progress'
+import * as React from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  CheckCircle2,
+  XCircle,
+  TrendingUp,
+  AlertCircle,
+  BarChart3,
+  ArrowRight,
+} from "lucide-react";
+import { AppLayout } from "@/components/app-layout";
+import { Progress } from "@/components/ui/progress";
 
 interface SectionScore {
-  name: string
-  score: number
-  maxScore: number
-  status: 'pass' | 'fail'
+  name: string;
+  score: number;
+  maxScore: number;
+  status: "pass" | "fail";
 }
 
 // Mock result data
 const RESULT_DATA = {
-  evaluationTitle: 'Full Stack Developer Evaluation',
+  evaluationTitle: "Full Stack Developer Evaluation",
   totalScore: 78,
   maxScore: 100,
-  status: 'pass',
-  completedAt: new Date('2024-05-01T14:30:00'),
+  status: "pass",
+  completedAt: new Date("2024-05-01T14:30:00"),
   sections: [
     {
-      name: 'Multiple Choice Questions',
+      name: "Multiple Choice Questions",
       score: 85,
       maxScore: 100,
-      status: 'pass',
+      status: "pass",
       details: {
         correct: 17,
         total: 20,
-        timeSpent: '12 minutes',
+        timeSpent: "12 minutes",
       },
     },
     {
-      name: 'Coding Challenge',
+      name: "Coding Challenge",
       score: 75,
       maxScore: 100,
-      status: 'pass',
+      status: "pass",
       details: {
         testsPassed: 7,
         totalTests: 10,
-        timeSpent: '28 minutes',
+        timeSpent: "28 minutes",
       },
     },
     {
-      name: 'AI Interview',
+      name: "AI Interview",
       score: 68,
       maxScore: 100,
-      status: 'fail',
+      status: "fail",
       details: {
         communicationScore: 7,
         technicalDepth: 6,
@@ -56,44 +69,44 @@ const RESULT_DATA = {
       },
     },
   ] as SectionScore[],
-}
+};
 
 const FEEDBACK = [
   {
-    title: 'Strengths',
+    title: "Strengths",
     items: [
-      'Strong fundamentals in data structures and algorithms',
-      'Good problem-solving approach with clear logic',
-      'Excellent communication of thought process',
+      "Strong fundamentals in data structures and algorithms",
+      "Good problem-solving approach with clear logic",
+      "Excellent communication of thought process",
     ],
     icon: CheckCircle2,
-    color: 'text-green-500',
+    color: "text-green-500",
   },
   {
-    title: 'Areas for Improvement',
+    title: "Areas for Improvement",
     items: [
-      'Code optimization could be better for edge cases',
-      'Could benefit from more experience with React hooks patterns',
-      'Time management during coding section needs work',
+      "Code optimization could be better for edge cases",
+      "Could benefit from more experience with React hooks patterns",
+      "Time management during coding section needs work",
     ],
     icon: AlertCircle,
-    color: 'text-yellow-500',
+    color: "text-yellow-500",
   },
   {
-    title: 'Recommendations',
+    title: "Recommendations",
     items: [
-      'Practice more advanced system design problems',
-      'Review recent changes in JavaScript ES2024 features',
-      'Build a portfolio project combining frontend and backend skills',
+      "Practice more advanced system design problems",
+      "Review recent changes in JavaScript ES2024 features",
+      "Build a portfolio project combining frontend and backend skills",
     ],
     icon: TrendingUp,
-    color: 'text-blue-500',
+    color: "text-blue-500",
   },
-]
+];
 
 export default function EvaluationResultPage() {
-  const isPassed = RESULT_DATA.status === 'pass'
-  const scorePercentage = (RESULT_DATA.totalScore / RESULT_DATA.maxScore) * 100
+  const isPassed = RESULT_DATA.status === "pass";
+  const scorePercentage = (RESULT_DATA.totalScore / RESULT_DATA.maxScore) * 100;
 
   return (
     <AppLayout>
@@ -117,7 +130,7 @@ export default function EvaluationResultPage() {
               </div>
               <div>
                 <h1 className="text-4xl font-bold tracking-tight">
-                  {isPassed ? 'Congratulations!' : 'Evaluation Complete'}
+                  {isPassed ? "Congratulations!" : "Evaluation Complete"}
                 </h1>
                 <p className="text-lg text-muted-foreground mt-2">
                   {RESULT_DATA.evaluationTitle}
@@ -142,9 +155,13 @@ export default function EvaluationResultPage() {
                     <div className="flex justify-between text-sm text-muted-foreground">
                       <span>
                         {isPassed ? (
-                          <span className="text-green-500 font-semibold">PASSED</span>
+                          <span className="text-green-500 font-semibold">
+                            PASSED
+                          </span>
                         ) : (
-                          <span className="text-red-500 font-semibold">FAILED</span>
+                          <span className="text-red-500 font-semibold">
+                            FAILED
+                          </span>
                         )}
                       </span>
                       <span>{scorePercentage.toFixed(0)}%</span>
@@ -159,15 +176,18 @@ export default function EvaluationResultPage() {
               <h2 className="text-2xl font-bold">Section Breakdown</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {RESULT_DATA.sections.map((section, idx) => {
-                  const sectionPercentage = (section.score / section.maxScore) * 100
-                  const sectionPassed = section.status === 'pass'
+                  const sectionPercentage =
+                    (section.score / section.maxScore) * 100;
+                  const sectionPassed = section.status === "pass";
 
                   return (
                     <Card key={idx} className="overflow-hidden">
                       <CardHeader className="pb-3">
                         <div className="flex items-start justify-between">
                           <div className="space-y-1 flex-1">
-                            <CardTitle className="text-base">{section.name}</CardTitle>
+                            <CardTitle className="text-base">
+                              {section.name}
+                            </CardTitle>
                             <CardDescription className="flex items-center gap-2">
                               {sectionPassed ? (
                                 <>
@@ -187,7 +207,9 @@ export default function EvaluationResultPage() {
                       <CardContent className="space-y-4">
                         <div className="space-y-2">
                           <div className="flex justify-between text-sm">
-                            <span className="font-medium">{section.score}/{section.maxScore}</span>
+                            <span className="font-medium">
+                              {section.score}/{section.maxScore}
+                            </span>
                             <span className="text-muted-foreground">
                               {sectionPercentage.toFixed(0)}%
                             </span>
@@ -200,53 +222,77 @@ export default function EvaluationResultPage() {
                           {idx === 0 && (
                             <>
                               <div className="flex justify-between">
-                                <span className="text-muted-foreground">Correct Answers:</span>
+                                <span className="text-muted-foreground">
+                                  Correct Answers:
+                                </span>
                                 <span className="font-medium">
-                                  {section.details.correct}/{section.details.total}
+                                  {section.details.correct}/
+                                  {section.details.total}
                                 </span>
                               </div>
                               <div className="flex justify-between">
-                                <span className="text-muted-foreground">Time Spent:</span>
-                                <span className="font-medium">{section.details.timeSpent}</span>
+                                <span className="text-muted-foreground">
+                                  Time Spent:
+                                </span>
+                                <span className="font-medium">
+                                  {section.details.timeSpent}
+                                </span>
                               </div>
                             </>
                           )}
                           {idx === 1 && (
                             <>
                               <div className="flex justify-between">
-                                <span className="text-muted-foreground">Tests Passed:</span>
+                                <span className="text-muted-foreground">
+                                  Tests Passed:
+                                </span>
                                 <span className="font-medium">
-                                  {section.details.testsPassed}/{section.details.totalTests}
+                                  {section.details.testsPassed}/
+                                  {section.details.totalTests}
                                 </span>
                               </div>
                               <div className="flex justify-between">
-                                <span className="text-muted-foreground">Time Spent:</span>
-                                <span className="font-medium">{section.details.timeSpent}</span>
+                                <span className="text-muted-foreground">
+                                  Time Spent:
+                                </span>
+                                <span className="font-medium">
+                                  {section.details.timeSpent}
+                                </span>
                               </div>
                             </>
                           )}
                           {idx === 2 && (
                             <>
                               <div className="flex justify-between">
-                                <span className="text-muted-foreground">Communication:</span>
+                                <span className="text-muted-foreground">
+                                  Communication:
+                                </span>
                                 <span className="font-medium">
                                   {section.details.communicationScore}/10
                                 </span>
                               </div>
                               <div className="flex justify-between">
-                                <span className="text-muted-foreground">Technical Depth:</span>
-                                <span className="font-medium">{section.details.technicalDepth}/10</span>
+                                <span className="text-muted-foreground">
+                                  Technical Depth:
+                                </span>
+                                <span className="font-medium">
+                                  {section.details.technicalDepth}/10
+                                </span>
                               </div>
                               <div className="flex justify-between">
-                                <span className="text-muted-foreground">Clarity:</span>
-                                <span className="font-medium">{section.details.clarity}/10</span>
+                                <span className="text-muted-foreground">
+                                  Clarity:
+                                </span>
+                                <span className="font-medium">
+                                  {section.details.clarity}/10
+                                </span>
                               </div>
                             </>
                           )}
                         </div>
                       </CardContent>
                     </Card>
-                  )
+                  );
                 })}
               </div>
             </div>
@@ -256,7 +302,7 @@ export default function EvaluationResultPage() {
               <h2 className="text-2xl font-bold">Detailed Feedback</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {FEEDBACK.map((section, idx) => {
-                  const Icon = section.icon
+                  const Icon = section.icon;
                   return (
                     <Card key={idx}>
                       <CardHeader>
@@ -269,7 +315,9 @@ export default function EvaluationResultPage() {
                         <ul className="space-y-3">
                           {section.items.map((item, itemIdx) => (
                             <li key={itemIdx} className="flex gap-2 text-sm">
-                              <span className={`mt-1 h-1.5 w-1.5 rounded-full flex-shrink-0 ${section.color}`} />
+                              <span
+                                className={`mt-1 h-1.5 w-1.5 rounded-full flex-shrink-0 ${section.color}`}
+                              />
                               <span className="text-muted-foreground leading-relaxed">
                                 {item}
                               </span>
@@ -278,7 +326,7 @@ export default function EvaluationResultPage() {
                         </ul>
                       </CardContent>
                     </Card>
-                  )
+                  );
                 })}
               </div>
             </div>
@@ -305,16 +353,18 @@ export default function EvaluationResultPage() {
                   </div>
                   <div className="space-y-1">
                     <p className="text-sm text-muted-foreground">Sections</p>
-                    <p className="text-2xl font-bold">{RESULT_DATA.sections.length}</p>
+                    <p className="text-2xl font-bold">
+                      {RESULT_DATA.sections.length}
+                    </p>
                   </div>
                   <div className="space-y-1">
                     <p className="text-sm text-muted-foreground">Status</p>
                     <p
                       className={`text-2xl font-bold ${
-                        isPassed ? 'text-green-500' : 'text-red-500'
+                        isPassed ? "text-green-500" : "text-red-500"
                       }`}
                     >
-                      {isPassed ? 'Passed' : 'Failed'}
+                      {isPassed ? "Passed" : "Failed"}
                     </p>
                   </div>
                 </div>
@@ -336,5 +386,5 @@ export default function EvaluationResultPage() {
         </div>
       </div>
     </AppLayout>
-  )
+  );
 }

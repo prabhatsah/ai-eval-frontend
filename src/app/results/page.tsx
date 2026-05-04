@@ -1,6 +1,12 @@
-import { AppLayout } from '@/components/app-layout'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
+import { AppLayout } from "@/components/app-layout";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 export default function ResultsPage() {
   return (
@@ -22,12 +28,27 @@ export default function ResultsPage() {
             {/* Filter Cards */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
               {[
-                { label: 'Total Results', value: '324', color: 'bg-blue-500/10' },
-                { label: 'Average Score', value: '8.5/10', color: 'bg-green-500/10' },
-                { label: 'Success Rate', value: '92%', color: 'bg-purple-500/10' },
-                { label: 'This Month', value: '48', color: 'bg-orange-500/10' },
+                {
+                  label: "Total Results",
+                  value: "324",
+                  color: "bg-blue-500/10",
+                },
+                {
+                  label: "Average Score",
+                  value: "8.5/10",
+                  color: "bg-green-500/10",
+                },
+                {
+                  label: "Success Rate",
+                  value: "92%",
+                  color: "bg-purple-500/10",
+                },
+                { label: "This Month", value: "48", color: "bg-orange-500/10" },
               ].map((stat) => (
-                <Card key={stat.label} className={`${stat.color} border-border/50`}>
+                <Card
+                  key={stat.label}
+                  className={`${stat.color} border-border/50`}
+                >
                   <CardHeader className="pb-3">
                     <CardTitle className="text-sm font-medium text-muted-foreground">
                       {stat.label}
@@ -51,11 +72,36 @@ export default function ResultsPage() {
               <CardContent>
                 <div className="space-y-3">
                   {[
-                    { id: 'RES-001', evaluation: 'Q1 Performance', score: '9.2', status: 'Excellent' },
-                    { id: 'RES-002', evaluation: 'Team Assessment', score: '8.1', status: 'Good' },
-                    { id: 'RES-003', evaluation: 'Annual Review', score: '7.8', status: 'Good' },
-                    { id: 'RES-004', evaluation: 'Project Delivery', score: '8.9', status: 'Excellent' },
-                    { id: 'RES-005', evaluation: 'Communication', score: '7.5', status: 'Good' },
+                    {
+                      id: "RES-001",
+                      evaluation: "Q1 Performance",
+                      score: "9.2",
+                      status: "Excellent",
+                    },
+                    {
+                      id: "RES-002",
+                      evaluation: "Team Assessment",
+                      score: "8.1",
+                      status: "Good",
+                    },
+                    {
+                      id: "RES-003",
+                      evaluation: "Annual Review",
+                      score: "7.8",
+                      status: "Good",
+                    },
+                    {
+                      id: "RES-004",
+                      evaluation: "Project Delivery",
+                      score: "8.9",
+                      status: "Excellent",
+                    },
+                    {
+                      id: "RES-005",
+                      evaluation: "Communication",
+                      score: "7.5",
+                      status: "Good",
+                    },
                   ].map((result) => (
                     <div
                       key={result.id}
@@ -63,7 +109,9 @@ export default function ResultsPage() {
                     >
                       <div className="flex-1">
                         <div className="flex items-center gap-3">
-                          <div className="font-mono text-xs text-muted-foreground">{result.id}</div>
+                          <div className="font-mono text-xs text-muted-foreground">
+                            {result.id}
+                          </div>
                           <p className="font-medium">{result.evaluation}</p>
                         </div>
                       </div>
@@ -72,7 +120,13 @@ export default function ResultsPage() {
                           <p className="text-lg font-bold">{result.score}</p>
                           <p className="text-xs text-muted-foreground">/10</p>
                         </div>
-                        <Badge variant={result.status === 'Excellent' ? 'default' : 'secondary'}>
+                        <Badge
+                          variant={
+                            result.status === "Excellent"
+                              ? "default"
+                              : "secondary"
+                          }
+                        >
                           {result.status}
                         </Badge>
                       </div>
@@ -100,5 +154,5 @@ export default function ResultsPage() {
         </div>
       </div>
     </AppLayout>
-  )
+  );
 }

@@ -1,135 +1,150 @@
-'use client'
+"use client";
 
-import * as React from 'react'
-import { Button } from '@/components/ui/button'
-import { Progress } from '@/components/ui/progress'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { QuestionCard } from '@/components/question-card'
-import { CodingEditor } from '@/components/coding-editor'
-import { ChatInterface } from '@/components/chat-interface'
-import { Clock, ChevronLeft, ChevronRight } from 'lucide-react'
-import { AppLayout } from '@/components/app-layout'
+import * as React from "react";
+import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { QuestionCard } from "@/components/question-card";
+import { CodingEditor } from "@/components/coding-editor";
+import { ChatInterface } from "@/components/chat-interface";
+import { Clock, ChevronLeft, ChevronRight } from "lucide-react";
+import { AppLayout } from "@/components/app-layout";
 
-type Section = 'mcq' | 'coding' | 'interview'
+type Section = "mcq" | "coding" | "interview";
 
 interface Message {
-  id: string
-  type: 'question' | 'answer'
-  content: string
-  timestamp: Date
+  id: string;
+  type: "question" | "answer";
+  content: string;
+  timestamp: Date;
 }
 
 // Mock data
 const EVALUATION_DATA = {
-  title: 'Full Stack Developer Evaluation',
+  title: "Full Stack Developer Evaluation",
   totalTime: 3600, // 60 minutes in seconds
   sections: {
     mcq: {
-      label: 'Multiple Choice Questions',
+      label: "Multiple Choice Questions",
       duration: 15,
       questions: [
         {
-          id: '1',
-          question: 'What is the time complexity of binary search?',
-          description: 'Choose the correct answer',
+          id: "1",
+          question: "What is the time complexity of binary search?",
+          description: "Choose the correct answer",
           options: [
-            { id: 'a', text: 'O(n)', value: 'a' },
-            { id: 'b', text: 'O(log n)', value: 'b' },
-            { id: 'c', text: 'O(n²)', value: 'c' },
-            { id: 'd', text: 'O(n log n)', value: 'd' },
+            { id: "a", text: "O(n)", value: "a" },
+            { id: "b", text: "O(log n)", value: "b" },
+            { id: "c", text: "O(n²)", value: "c" },
+            { id: "d", text: "O(n log n)", value: "d" },
           ],
         },
         {
-          id: '2',
-          question: 'Which of the following is NOT a valid HTML5 semantic element?',
-          description: 'Select the incorrect option',
+          id: "2",
+          question:
+            "Which of the following is NOT a valid HTML5 semantic element?",
+          description: "Select the incorrect option",
           options: [
-            { id: 'a', text: '<article>', value: 'a' },
-            { id: 'b', text: '<section>', value: 'b' },
-            { id: 'c', text: '<paragraph>', value: 'c' },
-            { id: 'd', text: '<nav>', value: 'd' },
+            { id: "a", text: "<article>", value: "a" },
+            { id: "b", text: "<section>", value: "b" },
+            { id: "c", text: "<paragraph>", value: "c" },
+            { id: "d", text: "<nav>", value: "d" },
           ],
         },
         {
-          id: '3',
-          question: 'What is the correct way to select all elements with the class "active"?',
-          description: 'CSS selector question',
+          id: "3",
+          question:
+            'What is the correct way to select all elements with the class "active"?',
+          description: "CSS selector question",
           options: [
-            { id: 'a', text: '.active', value: 'a' },
-            { id: 'b', text: '#active', value: 'b' },
-            { id: 'c', text: '[active]', value: 'c' },
-            { id: 'd', text: 'active', value: 'd' },
+            { id: "a", text: ".active", value: "a" },
+            { id: "b", text: "#active", value: "b" },
+            { id: "c", text: "[active]", value: "c" },
+            { id: "d", text: "active", value: "d" },
           ],
         },
       ],
     },
     coding: {
-      label: 'Coding Challenge',
+      label: "Coding Challenge",
       duration: 30,
       challenge:
-        'Write a function that reverses a string without using built-in reverse methods.',
-      template: 'function reverseString(str) {\n  // Your code here\n}\n\nreverseString("hello");',
+        "Write a function that reverses a string without using built-in reverse methods.",
+      template:
+        'function reverseString(str) {\n  // Your code here\n}\n\nreverseString("hello");',
     },
     interview: {
-      label: 'AI Interview',
+      label: "AI Interview",
       duration: 15,
-      initialQuestion: 'Tell me about your experience with React and how you handle state management.',
+      initialQuestion:
+        "Tell me about your experience with React and how you handle state management.",
     },
   },
-}
+};
 
 export default function EvaluationPage() {
-  const [currentSection, setCurrentSection] = React.useState<Section>('interview')
-  const [timeRemaining, setTimeRemaining] = React.useState(EVALUATION_DATA.totalTime)
-  const [sectionAnswers, setSectionAnswers] = React.useState<Record<string, string>>({})
+  const [currentSection, setCurrentSection] =
+    React.useState<Section>("interview");
+  const [timeRemaining, setTimeRemaining] = React.useState(
+    EVALUATION_DATA.totalTime,
+  );
+  const [sectionAnswers, setSectionAnswers] = React.useState<
+    Record<string, string>
+  >({});
   const [codingAnswer, setCodingAnswer] = React.useState(
-    EVALUATION_DATA.sections.coding.template
-  )
+    EVALUATION_DATA.sections.coding.template,
+  );
   const [chatMessages, setChatMessages] = React.useState<Message[]>([
     {
-      id: '1',
-      type: 'question',
+      id: "1",
+      type: "question",
       content: EVALUATION_DATA.sections.interview.initialQuestion,
       timestamp: new Date(),
     },
-  ])
+  ]);
 
   // Timer effect
   React.useEffect(() => {
     const timer = setInterval(() => {
       setTimeRemaining((prev) => {
         if (prev <= 1) {
-          clearInterval(timer)
-          return 0
+          clearInterval(timer);
+          return 0;
         }
-        return prev - 1
-      })
-    }, 1000)
+        return prev - 1;
+      });
+    }, 1000);
 
-    return () => clearInterval(timer)
-  }, [])
+    return () => clearInterval(timer);
+  }, []);
 
   const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60)
-    const secs = seconds % 60
-    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
-  }
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+  };
 
   const handleSelectOption = (value: string) => {
     setSectionAnswers((prev) => ({
       ...prev,
       [`q-${Object.keys(sectionAnswers).length}`]: value,
-    }))
-  }
+    }));
+  };
 
   const handleSendMessage = (message: string) => {
     const newMessage: Message = {
       id: Math.random().toString(),
-      type: 'answer',
+      type: "answer",
       content: message,
       timestamp: new Date(),
-    }
-    setChatMessages((prev) => [...prev, newMessage])
+    };
+    setChatMessages((prev) => [...prev, newMessage]);
 
     // Mock response after a delay
     setTimeout(() => {
@@ -137,19 +152,23 @@ export default function EvaluationPage() {
         ...prev,
         {
           id: Math.random().toString(),
-          type: 'question',
-          content: "That's interesting! Can you elaborate on how you handled state management challenges?",
+          type: "question",
+          content:
+            "That's interesting! Can you elaborate on how you handled state management challenges?",
           timestamp: new Date(),
         },
-      ])
-    }, 1000)
-  }
+      ]);
+    }, 1000);
+  };
 
   const sections = Object.entries(EVALUATION_DATA.sections) as Array<
     [Section, (typeof EVALUATION_DATA.sections)[Section]]
-  >
-  const currentSectionIndex = sections.findIndex(([key]) => key === currentSection)
-  const progressPercentage = ((currentSectionIndex + 1) / sections.length) * 100
+  >;
+  const currentSectionIndex = sections.findIndex(
+    ([key]) => key === currentSection,
+  );
+  const progressPercentage =
+    ((currentSectionIndex + 1) / sections.length) * 100;
 
   return (
     <AppLayout>
@@ -161,9 +180,9 @@ export default function EvaluationPage() {
               <div>
                 <h1 className="text-2xl font-bold">{EVALUATION_DATA.title}</h1>
                 <p className="text-sm text-muted-foreground">
-                  {currentSection === 'mcq' && 'Multiple Choice Questions'}
-                  {currentSection === 'coding' && 'Coding Challenge'}
-                  {currentSection === 'interview' && 'AI Interview'}
+                  {currentSection === "mcq" && "Multiple Choice Questions"}
+                  {currentSection === "coding" && "Coding Challenge"}
+                  {currentSection === "interview" && "AI Interview"}
                 </p>
               </div>
               <div className="flex items-center gap-2 px-4 py-2 bg-destructive/10 text-destructive rounded-lg font-mono font-semibold">
@@ -178,7 +197,9 @@ export default function EvaluationPage() {
                 <span className="font-medium">
                   Section {currentSectionIndex + 1} of {sections.length}
                 </span>
-                <span className="text-muted-foreground">{Math.round(progressPercentage)}%</span>
+                <span className="text-muted-foreground">
+                  {Math.round(progressPercentage)}%
+                </span>
               </div>
               <Progress value={progressPercentage} className="h-2" />
             </div>
@@ -189,13 +210,15 @@ export default function EvaluationPage() {
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-4xl mx-auto">
             {/* MCQ Section */}
-            {currentSection === 'mcq' && (
+            {currentSection === "mcq" && (
               <div className="space-y-6">
                 {EVALUATION_DATA.sections.mcq.questions.map((question, idx) => (
                   <QuestionCard
                     key={question.id}
                     questionNumber={idx + 1}
-                    totalQuestions={EVALUATION_DATA.sections.mcq.questions.length}
+                    totalQuestions={
+                      EVALUATION_DATA.sections.mcq.questions.length
+                    }
                     question={question.question}
                     description={question.description}
                     options={question.options}
@@ -207,12 +230,14 @@ export default function EvaluationPage() {
             )}
 
             {/* Coding Section */}
-            {currentSection === 'coding' && (
+            {currentSection === "coding" && (
               <div className="space-y-6">
                 <Card>
                   <CardHeader>
                     <CardTitle>Coding Challenge</CardTitle>
-                    <CardDescription>{EVALUATION_DATA.sections.coding.challenge}</CardDescription>
+                    <CardDescription>
+                      {EVALUATION_DATA.sections.coding.challenge}
+                    </CardDescription>
                   </CardHeader>
                 </Card>
                 <CodingEditor
@@ -227,7 +252,7 @@ export default function EvaluationPage() {
             )}
 
             {/* Interview Section */}
-            {currentSection === 'interview' && (
+            {currentSection === "interview" && (
               <div className="h-[600px]">
                 <ChatInterface
                   title="AI Interview"
@@ -243,9 +268,9 @@ export default function EvaluationPage() {
               <Button
                 variant="outline"
                 onClick={() => {
-                  const prevIndex = currentSectionIndex - 1
+                  const prevIndex = currentSectionIndex - 1;
                   if (prevIndex >= 0) {
-                    setCurrentSection(sections[prevIndex][0])
+                    setCurrentSection(sections[prevIndex][0]);
                   }
                 }}
                 disabled={currentSectionIndex === 0}
@@ -258,16 +283,16 @@ export default function EvaluationPage() {
                 variant="default"
                 onClick={() => {
                   if (currentSectionIndex === sections.length - 1) {
-                    console.log('[v0] Evaluation submitted')
+                    console.log("[v0] Evaluation submitted");
                   } else {
-                    const nextIndex = currentSectionIndex + 1
-                    setCurrentSection(sections[nextIndex][0])
+                    const nextIndex = currentSectionIndex + 1;
+                    setCurrentSection(sections[nextIndex][0]);
                   }
                 }}
               >
                 {currentSectionIndex === sections.length - 1
-                  ? 'Submit Evaluation'
-                  : 'Next Section'}
+                  ? "Submit Evaluation"
+                  : "Next Section"}
                 {currentSectionIndex < sections.length - 1 && (
                   <ChevronRight className="h-4 w-4 ml-2" />
                 )}
@@ -281,19 +306,20 @@ export default function EvaluationPage() {
                   key={section}
                   className={`cursor-pointer transition-all ${
                     currentSection === section
-                      ? 'ring-2 ring-primary border-primary'
-                      : 'hover:border-primary/50'
+                      ? "ring-2 ring-primary border-primary"
+                      : "hover:border-primary/50"
                   }`}
                   onClick={() => setCurrentSection(section)}
                 >
                   <CardHeader>
                     <CardTitle className="text-base">
-                      {section === 'mcq' && 'MCQ'}
-                      {section === 'coding' && 'Coding'}
-                      {section === 'interview' && 'Interview'}
+                      {section === "mcq" && "MCQ"}
+                      {section === "coding" && "Coding"}
+                      {section === "interview" && "Interview"}
                     </CardTitle>
                     <CardDescription>
-                      {data.duration} {data.duration === 1 ? 'minute' : 'minutes'}
+                      {data.duration}{" "}
+                      {data.duration === 1 ? "minute" : "minutes"}
                     </CardDescription>
                   </CardHeader>
                 </Card>
@@ -303,5 +329,5 @@ export default function EvaluationPage() {
         </div>
       </div>
     </AppLayout>
-  )
+  );
 }

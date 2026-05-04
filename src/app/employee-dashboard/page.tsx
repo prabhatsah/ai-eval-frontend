@@ -1,80 +1,92 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { AppLayout } from '@/components/app-layout'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { EvaluationStatusBadge } from '@/components/evaluation-status-badge'
-import { PlayCircle, Calendar, CheckCircle2, AlertCircle } from 'lucide-react'
+import { useState } from "react";
+import { AppLayout } from "@/components/app-layout";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { EvaluationStatusBadge } from "@/components/evaluation-status-badge";
+import { PlayCircle, Calendar, CheckCircle2, AlertCircle } from "lucide-react";
 
 interface Evaluation {
-  id: string
-  title: string
-  description: string
-  status: 'not-started' | 'in-progress' | 'completed' | 'passed' | 'failed'
-  dueDate: string
-  progress?: number
+  id: string;
+  title: string;
+  description: string;
+  status: "not-started" | "in-progress" | "completed" | "passed" | "failed";
+  dueDate: string;
+  progress?: number;
 }
 
 const mockEvaluations: Evaluation[] = [
   {
-    id: '1',
-    title: 'Q1 Performance Review',
-    description: 'Annual performance evaluation for Q1 2025',
-    status: 'not-started',
-    dueDate: '2025-03-15',
+    id: "1",
+    title: "Q1 Performance Review",
+    description: "Annual performance evaluation for Q1 2025",
+    status: "not-started",
+    dueDate: "2025-03-15",
     progress: 0,
   },
   {
-    id: '2',
-    title: 'Technical Skills Assessment',
-    description: 'Evaluate technical capabilities and proficiency',
-    status: 'in-progress',
-    dueDate: '2025-02-28',
+    id: "2",
+    title: "Technical Skills Assessment",
+    description: "Evaluate technical capabilities and proficiency",
+    status: "in-progress",
+    dueDate: "2025-02-28",
     progress: 45,
   },
   {
-    id: '3',
-    title: 'Communication Skills Evaluation',
-    description: 'Assessment of communication and collaboration skills',
-    status: 'completed',
-    dueDate: '2025-02-10',
+    id: "3",
+    title: "Communication Skills Evaluation",
+    description: "Assessment of communication and collaboration skills",
+    status: "completed",
+    dueDate: "2025-02-10",
     progress: 100,
   },
   {
-    id: '4',
-    title: 'Project Leadership Assessment',
-    description: 'Evaluate leadership and project management abilities',
-    status: 'passed',
-    dueDate: '2025-01-20',
+    id: "4",
+    title: "Project Leadership Assessment",
+    description: "Evaluate leadership and project management abilities",
+    status: "passed",
+    dueDate: "2025-01-20",
     progress: 100,
   },
   {
-    id: '5',
-    title: 'Code Quality Review',
-    description: 'Review code quality and best practices adherence',
-    status: 'failed',
-    dueDate: '2025-01-15',
+    id: "5",
+    title: "Code Quality Review",
+    description: "Review code quality and best practices adherence",
+    status: "failed",
+    dueDate: "2025-01-15",
     progress: 100,
   },
-]
+];
 
 export default function EmployeeDashboardPage() {
-  const [evaluations] = useState<Evaluation[]>(mockEvaluations)
-  const [startingEvalId, setStartingEvalId] = useState<string | null>(null)
+  const [evaluations] = useState<Evaluation[]>(mockEvaluations);
+  const [startingEvalId, setStartingEvalId] = useState<string | null>(null);
 
   const handleStartEvaluation = async (evalId: string) => {
-    setStartingEvalId(evalId)
+    setStartingEvalId(evalId);
     // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    setStartingEvalId(null)
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    setStartingEvalId(null);
     // In a real app, this would navigate to the evaluation page
-    console.log('Starting evaluation:', evalId)
-  }
+    console.log("Starting evaluation:", evalId);
+  };
 
-  const completedCount = evaluations.filter(e => e.status === 'passed').length
-  const inProgressCount = evaluations.filter(e => e.status === 'in-progress').length
-  const pendingCount = evaluations.filter(e => e.status === 'not-started').length
+  const completedCount = evaluations.filter(
+    (e) => e.status === "passed",
+  ).length;
+  const inProgressCount = evaluations.filter(
+    (e) => e.status === "in-progress",
+  ).length;
+  const pendingCount = evaluations.filter(
+    (e) => e.status === "not-started",
+  ).length;
 
   return (
     <AppLayout>
@@ -144,11 +156,16 @@ export default function EmployeeDashboardPage() {
                 <h3 className="text-lg font-semibold">Assigned Evaluations</h3>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                   {evaluations.map((evaluation) => (
-                    <Card key={evaluation.id} className="bg-card/50 border-border/50 hover:border-border/80 transition-colors">
+                    <Card
+                      key={evaluation.id}
+                      className="bg-card/50 border-border/50 hover:border-border/80 transition-colors"
+                    >
                       <CardHeader>
                         <div className="flex items-start justify-between gap-4">
                           <div className="flex-1">
-                            <CardTitle className="text-base">{evaluation.title}</CardTitle>
+                            <CardTitle className="text-base">
+                              {evaluation.title}
+                            </CardTitle>
                             <CardDescription className="mt-1">
                               {evaluation.description}
                             </CardDescription>
@@ -162,11 +179,15 @@ export default function EmployeeDashboardPage() {
                           <div className="flex items-center gap-2 text-sm">
                             <Calendar className="h-4 w-4 text-muted-foreground" />
                             <span className="text-muted-foreground">
-                              Due: {new Date(evaluation.dueDate).toLocaleDateString('en-US', {
-                                month: 'short',
-                                day: 'numeric',
-                                year: 'numeric',
-                              })}
+                              Due:{" "}
+                              {new Date(evaluation.dueDate).toLocaleDateString(
+                                "en-US",
+                                {
+                                  month: "short",
+                                  day: "numeric",
+                                  year: "numeric",
+                                },
+                              )}
                             </span>
                           </div>
 
@@ -174,8 +195,12 @@ export default function EmployeeDashboardPage() {
                           {evaluation.progress !== undefined && (
                             <div className="space-y-1">
                               <div className="flex justify-between items-center">
-                                <span className="text-xs text-muted-foreground">Progress</span>
-                                <span className="text-xs font-medium">{evaluation.progress}%</span>
+                                <span className="text-xs text-muted-foreground">
+                                  Progress
+                                </span>
+                                <span className="text-xs font-medium">
+                                  {evaluation.progress}%
+                                </span>
                               </div>
                               <div className="h-2 bg-border/50 rounded-full overflow-hidden">
                                 <div
@@ -189,26 +214,33 @@ export default function EmployeeDashboardPage() {
                           {/* Action Button */}
                           <Button
                             onClick={() => handleStartEvaluation(evaluation.id)}
-                            disabled={startingEvalId === evaluation.id || evaluation.status === 'failed'}
+                            disabled={
+                              startingEvalId === evaluation.id ||
+                              evaluation.status === "failed"
+                            }
                             className="w-full mt-4"
-                            variant={evaluation.status === 'not-started' ? 'default' : 'outline'}
+                            variant={
+                              evaluation.status === "not-started"
+                                ? "default"
+                                : "outline"
+                            }
                           >
                             {startingEvalId === evaluation.id ? (
                               <>
                                 <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent mr-2" />
                                 Starting...
                               </>
-                            ) : evaluation.status === 'not-started' ? (
+                            ) : evaluation.status === "not-started" ? (
                               <>
                                 <PlayCircle className="h-4 w-4 mr-2" />
                                 Start Evaluation
                               </>
-                            ) : evaluation.status === 'in-progress' ? (
-                              'Continue Evaluation'
-                            ) : evaluation.status === 'failed' ? (
-                              'Retry Required'
+                            ) : evaluation.status === "in-progress" ? (
+                              "Continue Evaluation"
+                            ) : evaluation.status === "failed" ? (
+                              "Retry Required"
                             ) : (
-                              'View Results'
+                              "View Results"
                             )}
                           </Button>
                         </div>
@@ -233,5 +265,5 @@ export default function EmployeeDashboardPage() {
         </div>
       </div>
     </AppLayout>
-  )
+  );
 }

@@ -1,5 +1,9 @@
 import { useState } from "react";
-import { startAttempt, submitAnswer, finalizeAttempt } from "../api/attempt.api";
+import {
+  startAttempt,
+  submitAnswer,
+  finalizeAttempt,
+} from "../api/attempt.api";
 import { Attempt, SubmitAnswerRequest } from "../types/attempt.types";
 
 export const useAttempt = () => {

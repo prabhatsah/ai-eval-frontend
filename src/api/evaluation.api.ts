@@ -1,7 +1,9 @@
 import { CreateEvaluationRequest, Evaluation } from "../types/evaluation.types";
 import { apiClient } from "./client";
 
-export const createEvaluation = async (data: CreateEvaluationRequest): Promise<Evaluation> => {
+export const createEvaluation = async (
+  data: CreateEvaluationRequest,
+): Promise<Evaluation> => {
   const res = await apiClient.post<Evaluation>("/evaluations", data);
   return res.data;
 };

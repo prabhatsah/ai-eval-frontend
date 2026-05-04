@@ -1,5 +1,11 @@
-import { AppLayout } from '@/components/app-layout'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { AppLayout } from "@/components/app-layout";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export default function DashboardPage() {
   return (
@@ -19,10 +25,10 @@ export default function DashboardPage() {
             {/* Stats Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
               {[
-                { label: 'Total Users', value: '2,543', change: '+12%' },
-                { label: 'Revenue', value: '$45,231', change: '+8%' },
-                { label: 'Active Sessions', value: '341', change: '+5%' },
-                { label: 'Conversion Rate', value: '3.2%', change: '+2%' },
+                { label: "Total Users", value: "2,543", change: "+12%" },
+                { label: "Revenue", value: "$45,231", change: "+8%" },
+                { label: "Active Sessions", value: "341", change: "+5%" },
+                { label: "Conversion Rate", value: "3.2%", change: "+2%" },
               ].map((stat) => (
                 <Card key={stat.label} className="bg-card/50 border-border/50">
                   <CardHeader className="pb-3">
@@ -32,7 +38,9 @@ export default function DashboardPage() {
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold">{stat.value}</div>
-                    <p className="text-xs text-green-500/70 mt-2">{stat.change} from last month</p>
+                    <p className="text-xs text-green-500/70 mt-2">
+                      {stat.change} from last month
+                    </p>
                   </CardContent>
                 </Card>
               ))}
@@ -58,15 +66,18 @@ export default function DashboardPage() {
               <Card className="bg-card/50 border-border/50">
                 <CardHeader>
                   <CardTitle>Quick Stats</CardTitle>
-                  <CardDescription>
-                    Key metrics summary
-                  </CardDescription>
+                  <CardDescription>Key metrics summary</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    {['Growth Rate', 'User Retention', 'Uptime'].map((item) => (
-                      <div key={item} className="flex justify-between items-center py-2 border-b border-border/30">
-                        <span className="text-sm text-muted-foreground">{item}</span>
+                    {["Growth Rate", "User Retention", "Uptime"].map((item) => (
+                      <div
+                        key={item}
+                        className="flex justify-between items-center py-2 border-b border-border/30"
+                      >
+                        <span className="text-sm text-muted-foreground">
+                          {item}
+                        </span>
                         <span className="font-semibold">98%</span>
                       </div>
                     ))}
@@ -85,11 +96,20 @@ export default function DashboardPage() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {['New user registration', 'Payment received', 'System update completed'].map((activity, i) => (
-                    <div key={i} className="flex items-center gap-3 py-2 border-b border-border/30 last:border-0">
+                  {[
+                    "New user registration",
+                    "Payment received",
+                    "System update completed",
+                  ].map((activity, i) => (
+                    <div
+                      key={i}
+                      className="flex items-center gap-3 py-2 border-b border-border/30 last:border-0"
+                    >
                       <div className="h-2 w-2 bg-primary rounded-full" />
                       <span className="text-sm">{activity}</span>
-                      <span className="text-xs text-muted-foreground ml-auto">2 hours ago</span>
+                      <span className="text-xs text-muted-foreground ml-auto">
+                        2 hours ago
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -99,5 +119,5 @@ export default function DashboardPage() {
         </div>
       </div>
     </AppLayout>
-  )
+  );
 }

@@ -9,6 +9,7 @@ This document outlines all the manager-specific pages created for the SaaS evalu
 **Purpose:** Provides an overview of team evaluation performance and quick access to manager functions.
 
 **Features:**
+
 - **Statistics Cards** (4 cards showing):
   - Total Employees: 24 active team members
   - Evaluations Created: 12 total assessments
@@ -60,6 +61,7 @@ This document outlines all the manager-specific pages created for the SaaS evalu
      - AI Interview Cutoff: 50%
 
 **Features:**
+
 - Form validation on submit
 - Loading state during submission
 - Cancel and Create buttons with proper styling
@@ -94,6 +96,7 @@ This document outlines all the manager-specific pages created for the SaaS evalu
    - Empty state when no matches found
 
 **Features:**
+
 - Responsive table with horizontal scrolling
 - Hover effects on rows
 - Delete with confirmation dialog
@@ -133,6 +136,7 @@ This document outlines all the manager-specific pages created for the SaaS evalu
    - Pending (amber)
 
 **Features:**
+
 - Empty state message when no results match filters
 - Real-time filtering across all dimensions
 - Responsive table layout
@@ -165,7 +169,6 @@ This document outlines all the manager-specific pages created for the SaaS evalu
      - Shows each question with user answer vs correct answer
      - Green checkmark for correct, red X for incorrect
      - Question counter showing answered/total
-   
    - **Coding Challenge**
      - Problem statement
      - User's code in styled code block
@@ -177,7 +180,6 @@ This document outlines all the manager-specific pages created for the SaaS evalu
      - MCQ Score: 100% (3/3 correct)
      - Coding Score: 95% (1/1 problem solved)
      - AI Interview Score: 80% (strong performance)
-   
    - **Detailed Feedback Section**:
      - Strengths (green card with checkmark)
      - Areas for Improvement (yellow card with alert icon)
@@ -188,7 +190,6 @@ This document outlines all the manager-specific pages created for the SaaS evalu
      - Technical Knowledge: 8.5/10 with progress bar
      - Problem Solving: 7.5/10 with progress bar
      - Feedback text for each metric
-   
    - **Overall Assessment**:
      - Overall Score: 8/10
      - Overall progress bar
@@ -201,6 +202,7 @@ This document outlines all the manager-specific pages created for the SaaS evalu
    - Loading state during processing
 
 **Features:**
+
 - Tabbed interface for organized information
 - Color-coded feedback cards
 - Progress bars for visual score representation
@@ -212,6 +214,7 @@ This document outlines all the manager-specific pages created for the SaaS evalu
 ## Design Specifications
 
 **Color Scheme:**
+
 - Primary: Used for action buttons and active states
 - Status colors:
   - Success/Passed: Emerald green (#10b981)
@@ -220,11 +223,13 @@ This document outlines all the manager-specific pages created for the SaaS evalu
 - Neutral: Gray tones for text and borders
 
 **Typography:**
+
 - Headings: Bold, larger font weights
 - Body text: Regular, medium font weight
 - Labels: Small, medium-to-semibold weight
 
 **Components Used:**
+
 - Card: For sections and data display
 - Table: For list views
 - Tabs: For multi-section organization
@@ -240,6 +245,7 @@ This document outlines all the manager-specific pages created for the SaaS evalu
 All manager pages are accessible from the sidebar under "Manager Dashboard" menu item. Quick navigation is available through action buttons on each page.
 
 **Sidebar Navigation:**
+
 - Manager Dashboard → Overview
 - Create Evaluation → New assessment form
 - My Evaluations → View evaluations list
@@ -250,6 +256,7 @@ All manager pages are accessible from the sidebar under "Manager Dashboard" menu
 ## Mock Data
 
 All pages use realistic mock data including:
+
 - Real employee names
 - Various evaluation titles and skills
 - Score distributions (pass/fail)

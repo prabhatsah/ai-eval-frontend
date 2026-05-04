@@ -1,7 +1,14 @@
-'use client'
+"use client";
 
-import * as React from 'react'
-import { LayoutDashboard, FileText, BarChart3, Settings, Briefcase, Users } from 'lucide-react'
+import * as React from "react";
+import {
+  LayoutDashboard,
+  FileText,
+  BarChart3,
+  Settings,
+  Briefcase,
+  Users,
+} from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -11,49 +18,49 @@ import {
   SidebarMenuItem,
   SidebarProvider,
   SidebarTrigger,
-} from '@/components/ui/sidebar'
-import { Separator } from '@/components/ui/separator'
-import { usePathname } from 'next/navigation'
+} from "@/components/ui/sidebar";
+import { Separator } from "@/components/ui/separator";
+import { usePathname } from "next/navigation";
 
 interface AppLayoutProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 export function AppLayout({ children }: AppLayoutProps) {
-  const pathname = usePathname()
+  const pathname = usePathname();
 
   const menuItems = [
     {
-      label: 'Dashboard',
-      href: '/',
+      label: "Dashboard",
+      href: "/",
       icon: LayoutDashboard,
     },
     {
-      label: 'My Evaluations',
-      href: '/employee-dashboard',
+      label: "My Evaluations",
+      href: "/employee-dashboard",
       icon: Briefcase,
     },
     {
-      label: 'Evaluations',
-      href: '/evaluations',
+      label: "Evaluations",
+      href: "/evaluations",
       icon: FileText,
     },
     {
-      label: 'Results',
-      href: '/results',
+      label: "Results",
+      href: "/results",
       icon: BarChart3,
     },
     {
-      label: 'Manager Dashboard',
-      href: '/manager-dashboard',
+      label: "Manager Dashboard",
+      href: "/manager-dashboard",
       icon: Users,
     },
     {
-      label: 'Settings',
-      href: '/settings',
+      label: "Settings",
+      href: "/settings",
       icon: Settings,
     },
-  ]
+  ];
 
   return (
     <SidebarProvider>
@@ -66,8 +73,8 @@ export function AppLayout({ children }: AppLayoutProps) {
         <SidebarContent>
           <SidebarMenu>
             {menuItems.map((item) => {
-              const Icon = item.icon
-              const isActive = pathname === item.href
+              const Icon = item.icon;
+              const isActive = pathname === item.href;
               return (
                 <SidebarMenuItem key={item.href}>
                   <SidebarMenuButton
@@ -81,7 +88,7 @@ export function AppLayout({ children }: AppLayoutProps) {
                     </a>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
-              )
+              );
             })}
           </SidebarMenu>
         </SidebarContent>
@@ -105,10 +112,8 @@ export function AppLayout({ children }: AppLayoutProps) {
         </header>
 
         {/* Main Content Area */}
-        <main className="flex-1 overflow-y-auto">
-          {children}
-        </main>
+        <main className="flex-1 overflow-y-auto">{children}</main>
       </div>
     </SidebarProvider>
-  )
+  );
 }

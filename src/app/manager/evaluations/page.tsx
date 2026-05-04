@@ -1,6 +1,6 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
+import { useState } from "react";
 import {
   Table,
   TableBody,
@@ -8,80 +8,86 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import Link from 'next/link'
-import { Search, Edit2, Eye, Trash2, Plus } from 'lucide-react'
+} from "@/components/ui/table";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import Link from "next/link";
+import { Search, Edit2, Eye, Trash2, Plus } from "lucide-react";
 
 interface Evaluation {
-  id: string
-  title: string
-  skill: string
-  createdDate: string
-  candidatesAssigned: number
-  completedCount: number
+  id: string;
+  title: string;
+  skill: string;
+  createdDate: string;
+  candidatesAssigned: number;
+  completedCount: number;
 }
 
 export default function EvaluationsListPage() {
-  const [searchQuery, setSearchQuery] = useState('')
+  const [searchQuery, setSearchQuery] = useState("");
 
   const evaluations: Evaluation[] = [
     {
-      id: '1',
-      title: 'Senior Frontend Developer Assessment',
-      skill: 'Frontend Development',
-      createdDate: '2024-04-15',
+      id: "1",
+      title: "Senior Frontend Developer Assessment",
+      skill: "Frontend Development",
+      createdDate: "2024-04-15",
       candidatesAssigned: 5,
       completedCount: 3,
     },
     {
-      id: '2',
-      title: 'Python Developer Evaluation',
-      skill: 'Python',
-      createdDate: '2024-04-10',
+      id: "2",
+      title: "Python Developer Evaluation",
+      skill: "Python",
+      createdDate: "2024-04-10",
       candidatesAssigned: 8,
       completedCount: 6,
     },
     {
-      id: '3',
-      title: 'Full Stack Engineering Challenge',
-      skill: 'Full Stack',
-      createdDate: '2024-04-05',
+      id: "3",
+      title: "Full Stack Engineering Challenge",
+      skill: "Full Stack",
+      createdDate: "2024-04-05",
       candidatesAssigned: 6,
       completedCount: 4,
     },
     {
-      id: '4',
-      title: 'Data Science Evaluation',
-      skill: 'Data Science',
-      createdDate: '2024-03-28',
+      id: "4",
+      title: "Data Science Evaluation",
+      skill: "Data Science",
+      createdDate: "2024-03-28",
       candidatesAssigned: 4,
       completedCount: 4,
     },
     {
-      id: '5',
-      title: 'Backend Developer Assessment',
-      skill: 'Backend Development',
-      createdDate: '2024-03-20',
+      id: "5",
+      title: "Backend Developer Assessment",
+      skill: "Backend Development",
+      createdDate: "2024-03-20",
       candidatesAssigned: 7,
       completedCount: 5,
     },
-  ]
+  ];
 
   const filteredEvaluations = evaluations.filter(
-    evaluation =>
+    (evaluation) =>
       evaluation.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      evaluation.skill.toLowerCase().includes(searchQuery.toLowerCase())
-  )
+      evaluation.skill.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
 
   const handleDelete = (id: string) => {
-    if (confirm('Are you sure you want to delete this evaluation?')) {
-      console.log('Deleted evaluation:', id)
-      alert('Evaluation deleted successfully!')
+    if (confirm("Are you sure you want to delete this evaluation?")) {
+      console.log("Deleted evaluation:", id);
+      alert("Evaluation deleted successfully!");
     }
-  }
+  };
 
   return (
     <div className="space-y-6 py-8">
@@ -89,7 +95,9 @@ export default function EvaluationsListPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">My Evaluations</h1>
-          <p className="text-muted-foreground">Manage and view all evaluations you've created</p>
+          <p className="text-muted-foreground">
+            {"Manage and view all evaluations you've created"}
+          </p>
         </div>
         <Link href="/manager/create-evaluation">
           <Button className="gap-2">
@@ -137,19 +145,27 @@ export default function EvaluationsListPage() {
               <TableBody>
                 {filteredEvaluations.length > 0 ? (
                   filteredEvaluations.map((evaluation) => (
-                    <TableRow key={evaluation.id} className="border-border/30 hover:bg-muted/30">
-                      <TableCell className="font-medium">{evaluation.title}</TableCell>
+                    <TableRow
+                      key={evaluation.id}
+                      className="border-border/30 hover:bg-muted/30"
+                    >
+                      <TableCell className="font-medium">
+                        {evaluation.title}
+                      </TableCell>
                       <TableCell>
                         <span className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary/80">
                           {evaluation.skill}
                         </span>
                       </TableCell>
                       <TableCell className="text-muted-foreground text-sm">
-                        {new Date(evaluation.createdDate).toLocaleDateString('en-US', {
-                          year: 'numeric',
-                          month: 'short',
-                          day: 'numeric',
-                        })}
+                        {new Date(evaluation.createdDate).toLocaleDateString(
+                          "en-US",
+                          {
+                            year: "numeric",
+                            month: "short",
+                            day: "numeric",
+                          },
+                        )}
                       </TableCell>
                       <TableCell>
                         <div className="flex items-center gap-2 justify-center text-sm">
@@ -162,7 +178,8 @@ export default function EvaluationsListPage() {
                             />
                           </div>
                           <span className="text-xs text-muted-foreground">
-                            {evaluation.completedCount}/{evaluation.candidatesAssigned}
+                            {evaluation.completedCount}/
+                            {evaluation.candidatesAssigned}
                           </span>
                         </div>
                       </TableCell>
@@ -199,7 +216,10 @@ export default function EvaluationsListPage() {
                   ))
                 ) : (
                   <TableRow className="border-border/30">
-                    <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
+                    <TableCell
+                      colSpan={5}
+                      className="text-center py-8 text-muted-foreground"
+                    >
                       No evaluations found matching your search
                     </TableCell>
                   </TableRow>
@@ -210,5 +230,5 @@ export default function EvaluationsListPage() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
