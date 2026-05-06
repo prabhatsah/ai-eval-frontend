@@ -12,5 +12,11 @@ export const signup = async (data: {
 };
 
 export const login = async (data: { email: string; password: string }) => {
-  return apiClient.post<AuthResponse>("/auth/login", data);
+  return apiClient.post<AuthResponse>("/auth/login", data, {
+    withCredentials: true,
+  });
+};
+
+export const refreshToken = () => {
+  return apiClient.post("/auth/refresh", {}, { withCredentials: true });
 };

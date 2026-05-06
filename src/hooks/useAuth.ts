@@ -6,19 +6,20 @@ import {
   SignupRequest,
   SignupResponse,
 } from "../types/auth.types";
+import { useAuthContext } from "@/context/auth.context";
 
 export const useAuth = () => {
   const [loading, setLoading] = useState<boolean>(false);
+  const { setAuth } = useAuthContext();
 
   const handleLogin = async (data: LoginRequest): Promise<AuthResponse> => {
     setLoading(true);
     try {
       const res = await login(data);
       const result = res.data as AuthResponse;
-      console.log("result:", result);
+      console.log("res:", res);
 
-      // Set cookie
-      document.cookie = `token=${result.access_token}; path=/; max-age=86400; samesite=lax`;
+      setAuth(result);
 
       return result;
     } finally {
