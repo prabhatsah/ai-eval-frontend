@@ -32,7 +32,7 @@ export function AppLayout({ children }: AppLayoutProps) {
   const menuItems = [
     {
       label: "Dashboard",
-      href: "/",
+      href: "/dashboard",
       icon: LayoutDashboard,
     },
     {

@@ -6,11 +6,9 @@ import {
   SignupRequest,
   SignupResponse,
 } from "../types/auth.types";
-import { useAuthContext } from "@/context/auth.context";
 
 export const useAuth = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const { setAuth } = useAuthContext();
 
   const handleLogin = async (data: LoginRequest): Promise<AuthResponse> => {
     setLoading(true);
@@ -18,8 +16,6 @@ export const useAuth = () => {
       const res = await login(data);
       const result = res.data as AuthResponse;
       console.log("res:", res);
-
-      setAuth(result);
 
       return result;
     } finally {

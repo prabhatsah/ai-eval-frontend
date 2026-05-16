@@ -6,7 +6,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import React from "react";
-
 const Dashboard = () => {
   return (
     <div className="h-full flex flex-col">
