@@ -16,9 +16,8 @@ import { refreshToken } from "@/api/auth.api";
 // };
 
 type AuthContextType = {
-  accessToken: string | null;
   user: AuthResponse["user"] | null;
-  setAuth: (data: AuthResponse) => void;
+  setUser: (user: AuthResponse["user"] | null) => void;
   clearAuth: () => void;
   isLoading: boolean;
 };
@@ -26,25 +25,15 @@ type AuthContextType = {
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [accessToken, setAccessToken] = useState<string | null>(null);
   const [user, setUser] = useState<AuthResponse["user"] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    setAxiosToken(accessToken);
-  }, [accessToken]);
-
-  useEffect(() => {
     const restoreSession = async () => {
       try {
-        const res = await refreshToken();
-        const data = res.data;
-
-        setAccessToken(data.access_token);
-        setUser(data.user || null);
-      } catch (err) {
-        // silently fail (user not logged in)
-        setAccessToken(null);
+        const res = await refreshToken(); // cookie-based
+        setUser(res.data.user || null);
+      } catch {
         setUser(null);
       } finally {
         setIsLoading(false);
@@ -54,20 +43,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     restoreSession();
   }, []);
 
-  const setAuth = (data: AuthResponse) => {
-    setAccessToken(data.access_token);
-    setUser(data.user || null);
-  };
-
   const clearAuth = () => {
-    setAccessToken(null);
     setUser(null);
   };
 
   return (
-    <AuthContext.Provider
-      value={{ accessToken, user, setAuth, clearAuth, isLoading }}
-    >
+    <AuthContext.Provider value={{ user, setUser, clearAuth, isLoading }}>
       {children}
     </AuthContext.Provider>
   );

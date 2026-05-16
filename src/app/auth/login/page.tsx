@@ -16,6 +16,7 @@ import {
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle, Mail, Lock } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
+import { useAuthContext } from "@/context/auth.context";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -49,29 +50,40 @@ export default function LoginPage() {
     return Object.keys(newErrors).length === 0;
   };
 
+  const { setUser } = useAuthContext(); // ✅ store user, not token
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!validateForm()) {
-      return;
-    }
+    if (!validateForm()) return;
 
     setIsLoading(true);
     setErrors({});
 
     try {
-      const res = await handleLogin({
-        email,
-        password,
+      // ✅ Step 1: login (cookies set)
+      await handleLogin({ email, password });
+
+      // ✅ Step 2: fetch user
+      const res = await fetch("/api/me", {
+        credentials: "include",
       });
 
-      console.log("Login successful for:", email);
+      if (!res.ok) throw new Error("Failed to fetch user");
+
+      const user = await res.json();
+
+      setUser(user);
 
       router.push("/");
-    } catch (error) {
+    } catch (error: any) {
       console.error("Login error:", error);
+
       setErrors({
-        submit: error?.response?.data?.message || "Invalid email or password",
+        submit:
+          error?.response?.data?.message ||
+          error.message ||
+          "Invalid email or password",
       });
     } finally {
       setIsLoading(false);
