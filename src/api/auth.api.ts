@@ -1,4 +1,4 @@
-import { apiClient } from "./client";
+import apiClient from "./client";
 import { Role } from "../types/user.types";
 import { AuthResponse } from "../types/auth.types";
 
@@ -19,4 +19,8 @@ export const login = async (data: { email: string; password: string }) => {
 
 export const refreshToken = () => {
   return apiClient.post("/auth/refresh", {}, { withCredentials: true });
+};
+
+export const userInfo = () => {
+  return apiClient.get("/auth/api/me");
 };

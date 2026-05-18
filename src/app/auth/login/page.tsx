@@ -29,7 +29,7 @@ export default function LoginPage() {
   }>({});
   const [isLoading, setIsLoading] = useState(false);
 
-  const { handleLogin } = useAuth();
+  const { handleLogin, getUserInfo } = useAuth();
 
   const validateForm = () => {
     const newErrors: typeof errors = {};
@@ -61,19 +61,12 @@ export default function LoginPage() {
     setErrors({});
 
     try {
-      // ✅ Step 1: login (cookies set)
       await handleLogin({ email, password });
+      const res = await getUserInfo();
+      console.log("responsee", res);
+      if (!res.userId) throw new Error("Failed to fetch user");
 
-      // ✅ Step 2: fetch user
-      const res = await fetch("/api/me", {
-        credentials: "include",
-      });
-
-      if (!res.ok) throw new Error("Failed to fetch user");
-
-      const user = await res.json();
-
-      setUser(user);
+      setUser(res);
 
       router.push("/");
     } catch (error: any) {

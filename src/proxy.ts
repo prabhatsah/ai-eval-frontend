@@ -3,8 +3,8 @@ import type { NextRequest } from "next/server";
 
 export function proxy(request: NextRequest) {
   const token = request.cookies.get("accessToken");
-  console.log("token", token);
-  console.log("request.cookies", request.cookies);
+  // console.log("token", token);
+  // console.log("request.cookies", request.cookies);
   const { pathname } = request.nextUrl;
 
   // Public routes (allowed without login)

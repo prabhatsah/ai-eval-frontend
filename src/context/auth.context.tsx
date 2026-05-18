@@ -6,15 +6,6 @@ import { Role } from "@/types/user.types";
 import { AuthResponse } from "@/types/auth.types";
 import { refreshToken } from "@/api/auth.api";
 
-// type AuthState = {
-//   accessToken: string | null;
-//   user: {
-//     id: string;
-//     email: string;
-//     role: Role;
-//   } | null;
-// };
-
 type AuthContextType = {
   user: AuthResponse["user"] | null;
   setUser: (user: AuthResponse["user"] | null) => void;
@@ -31,12 +22,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const restoreSession = async () => {
       try {
-        const res = await refreshToken(); // cookie-based
-        setUser(res.data.user || null);
+        const res = await getMe(); // FIRST try access token
+        setUser(res.data);
       } catch {
-        setUser(null);
-      } finally {
-        setIsLoading(false);
+        try {
+          await refreshToken(); // only if needed
+          const res = await getMe();
+          setUser(res.data);
+        } catch {
+          setUser(null);
+        }
       }
     };
 

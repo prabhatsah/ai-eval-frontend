@@ -1,25 +1,32 @@
 import { useState } from "react";
-import { login, signup } from "../api/auth.api";
+import { login, signup, userInfo } from "../api/auth.api";
 import {
   AuthResponse,
   LoginRequest,
   SignupRequest,
   SignupResponse,
+  TokenUserInfoResponse,
 } from "../types/auth.types";
 
 export const useAuth = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
-  const handleLogin = async (data: LoginRequest): Promise<AuthResponse> => {
+  const handleLogin = async (data: LoginRequest) => {
     setLoading(true);
     try {
-      const res = await login(data);
-      const result = res.data as AuthResponse;
-      console.log("res:", res);
-
-      return result;
+      await login(data);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const getUserInfo = async (): Promise<TokenUserInfoResponse> => {
+    try {
+      const res = await userInfo();
+      const result = res.data as TokenUserInfoResponse;
+      return result;
+    } catch (error) {
+      console.log("error-->>>", error);
     }
   };
 
@@ -33,5 +40,5 @@ export const useAuth = () => {
     }
   };
 
-  return { handleLogin, handleSignup, loading };
+  return { handleLogin, handleSignup, loading, getUserInfo };
 };

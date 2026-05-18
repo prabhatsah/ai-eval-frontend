@@ -21,9 +21,13 @@ export interface AuthResponse {
   };
 }
 
-export interface AuthResponse {
-  access_token: string;
+export interface TokenUserInfoResponse {
+  userId: string;
+  role: Role;
 }
+// export interface AuthResponse {
+//   access_token: string;
+// }
 
 export interface SignupResponse {
   message: string;
